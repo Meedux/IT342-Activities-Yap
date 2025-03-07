@@ -13,7 +13,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/login", "/grantcode").permitAll()
+                .anyRequest().authenticated()
+            )
+            .csrf(csrf -> csrf.disable())
             .oauth2Login(oauth -> oauth.defaultSuccessUrl("/contacts", true))
             .logout(logout -> logout.logoutSuccessUrl("/"))
             .formLogin(formLogin -> formLogin.defaultSuccessUrl("/contacts", true));
