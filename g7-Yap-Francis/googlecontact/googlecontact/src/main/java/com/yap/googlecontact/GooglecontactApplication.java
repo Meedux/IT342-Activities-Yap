@@ -1,12 +1,12 @@
 package com.yap.googlecontact;
 
-spring.security.user.name=user
-		spring.security.user.password=Xxxchromerazor21#
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-		spring.security.oauth2.client.registration.github.client-id=Ov23lihhgJ9iVtPjmZim
-		spring.security.oauth2.client.registration.github.client-secret=d253871f7713f751cd8eb332d015dabc786da981
-		spring.security.oauth2.client.registration.github.scope=read:user,user.email
+@SpringBootApplication
+public class GooglecontactApplication {
 
-		spring.security.oauth2.client.registration.google.client-id=
-		spring.security.oauth2.client.registration.google.client-secret=
-		spring.security.oauth2.client.registration.google.scope=profile,email
+    public static void main(String[] args) {
+        SpringApplication.run(GooglecontactApplication.class, args);
+    }
+}
