@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${isNew} ? 'Add Contact' : 'Edit Contact'">Manage Contact</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #4285F4;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn-secondary {
+            background-color: #5f6368;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <h1 th:text="${isNew} ? 'Add New Contact' : 'Edit Contact'">Manage Contact</h1>
+    
+    <form th:action="${isNew} ? @{/contacts(token=${accessToken})} : @{/contacts/{resourceName}(resourceName=${contact.resourceName}, token=${accessToken})}" method="post">
+        <div class="form-group">
+            <label for="givenName">First Name</label>
+            <input type="text" id="givenName" name="givenName" th:value="${contact.givenName}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="familyName">Last Name</label>
+            <input type="text" id="familyName" name="familyName" th:value="${contact.familyName}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="text" id="email" name="email" 
+                   th:value="${contact.emailAddresses != null && !contact.emailAddresses.empty} ? ${contact.emailAddresses[0].value} : ''">
+        </div>
+        
+        <div class="form-group">
+            <label for="emailType">Email Type</label>
+            <select id="emailType" name="emailType">
+                <option value="home" th:selected="${contact.emailAddresses != null && !contact.emailAddresses.empty && contact.emailAddresses[0].type == 'home'}">Home</option>
+                <option value="work" th:selected="${contact.emailAddresses != null && !contact.emailAddresses.empty && contact.emailAddresses[0].type == 'work'}">Work</option>
+                <option value="other" th:selected="${contact.emailAddresses != null && !contact.emailAddresses.empty && contact.emailAddresses[0].type == 'other'}">Other</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" id="phoneNumber" name="phoneNumber"
+                   th:value="${contact.phoneNumbers != null && !contact.phoneNumbers.empty} ? ${contact.phoneNumbers[0].value} : ''">
+        </div>
+        
+        <div class="form-group">
+            <label for="phoneType">Phone Type</label>
+            <select id="phoneType" name="phoneType">
+                <option value="mobile" th:selected="${contact.phoneNumbers != null && !contact.phoneNumbers.empty && contact.phoneNumbers[0].type == 'mobile'}">Mobile</option>
+                <option value="home" th:selected="${contact.phoneNumbers != null && !contact.phoneNumbers.empty && contact.phoneNumbers[0].type == 'home'}">Home</option>
+                <option value="work" th:selected="${contact.phoneNumbers != null && !contact.phoneNumbers.empty && contact.phoneNumbers[0].type == 'work'}">Work</option>
+                <option value="other" th:selected="${contact.phoneNumbers != null && !contact.phoneNumbers.empty && contact.phoneNumbers[0].type == 'other'}">Other</option>
+            </select>
+        </div>
+        
+        <div>
+            <button type="submit" class="btn">Save</button>
+            <a th:href="@{/contacts(token=${accessToken})}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</body>
+</html>

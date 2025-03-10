@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OAuth2 Authentication Success</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .token-container {
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                padding: 15px;
+                border-radius: 4px;
+                overflow-wrap: break-word;
+                margin-top: 20px;
+            }
+            h1 {
+                color: #4285F4;
+            }
+            .btn {
+                display: inline-block;
+                background-color: #4285F4;
+                color: white;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 4px;
+                margin-top: 20px;
+            }
+            .btn:hover {
+                background-color: #357ae8;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Authentication Successful</h1>
+        <p>You have successfully authenticated with Google.</p>
+        
+        <h2>Your Access Token:</h2>
+        <div class="token-container">
+            <code th:text="${accessToken}"></code>
+        </div>
+        
+        <p><small>This token can be used to access Google APIs on your behalf.</small></p>
+        
+        <a th:href="@{/contacts(token=${accessToken})}" class="btn">Manage Contacts</a>
+    </body>
+</html>
